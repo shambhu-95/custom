@@ -22,6 +22,7 @@
 import math
 import re
 import base64
+import tempfile
 from datetime import date
 from barcode import EAN13
 from barcode.writer import ImageWriter
@@ -420,10 +421,19 @@ class ResPartner(models.Model):
             number = self.barcode
             my_code = EAN13(number, writer=ImageWriter())
             my_code.save("code")
-            with open('code.png', 'rb') as f:
-                self.sudo().write({
-                    'barcode_png': base64.b64encode(f.read())
-                })
+            # with open('code.png', 'rb') as f:
+            #     self.sudo().write({
+            #         'barcode_png': base64.b64encode(f.read())
+            #     })
+            with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as tmp_file:
+                tmp_path = tmp_file.name
+                my_code.save(tmp_path)
+                tmp_file.close()
+                with open(tmp_path, 'rb') as f:
+                    self.sudo().write({
+                        'barcode_png': base64.b64encode(f.read())
+                    })
+                os.remove(tmp_path)  # Clean up the temporary file
         if self.gender:
             gender_caps = self.gender.capitalize()
         if self.blood_group:
