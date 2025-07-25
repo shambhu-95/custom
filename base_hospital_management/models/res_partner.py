@@ -21,6 +21,7 @@
 ################################################################################
 import math
 import re
+import os
 import base64
 import tempfile
 from datetime import date
@@ -420,7 +421,7 @@ class ResPartner(models.Model):
             self.sudo().write({'barcode': ean})
             number = self.barcode
             my_code = EAN13(number, writer=ImageWriter())
-            my_code.save("code")
+            # my_code.save("code")
             # with open('code.png', 'rb') as f:
             #     self.sudo().write({
             #         'barcode_png': base64.b64encode(f.read())
