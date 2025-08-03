@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+   <template id="homepage_inherit_product_display"
+             inherit_id="website.homepage" name="Products" active="True">
+       <data inherit_id="website.homepage">
+           <xpath expr="//div[@id='wrap']" position="inside">
+               <input type="hidden" name="csrf_token"
+                      t-att-value="request.csrf_token()"/>
+               <div class="container mt32 mb64">
+                   <section>
+                       <div class="product_details">
+                           <center>
+                               <h3>MOST SELLING PRODUCTS</h3>
+                           </center>
+                       </div>
+                       <br/>
+                       <div class="oe_product_cart_new row" style="overflow: hidden;">
+                           <t t-foreach="website_product_ids" t-as="website_product_id">
+                               <div class="col-md-3 col-sm-3 col-xs-12" style="padding:6px 6px 6px 6px;">
+                                   <form action="/shop/cart/update" method="post" class="card oe_product_cart"
+                                         itemscope="itemscope"
+                                         itemtype="http://schema.org/Product" data-publish="on">
+                                       <br/>
+                                       <center>
+                                           <div style="width:100%; height:155px;overflow: hidden;">
+                                               <a t-attf-href="/shop/product/#{ slug(website_product_id) }">
+                                                   <img t-attf-src="/web/image?model=product.template&amp;field=image_1920&amp;id=#{website_product_id.id}"
+                                                        class="img img-fluid"
+                                                        style="padding: 0px; margin: 0px; width:auto; height:100%;"/>
+                                               </a>
+                                           </div>
+                                       </center>
+                                       <br/>
+                                       <div class="card-body p-0 text-center o_wsale_product_information">
+                                           <div class="p-2 o_wsale_product_information_text">
+                                               <h6 class="o_wsale_products_item_title">
+                                                   <a data-oe-model="product.template"
+                                                      data-oe-id="website_product_id.id"
+                                                      data-oe-field="website_product_id.name"
+                                                      data-oe-type="char" data-oe-expression="product.name"
+                                                      itemprop="name"
+                                                      data-oe-field-xpath="/t[1]/form[1]/div[2]/div[1]/h6[1]/a[1]"
+                                                      t-attf-href="/shop/product/#{ slug(website_product_id) }"
+                                                      content="website_product_id.name">
+                                                       <t t-esc="website_product_id.name"/>
+                                                   </a>
+                                               </h6>
+                                               <h6 class="o_wsale_products_item_title">
+                                                   <span t-esc="website_product_id.currency_id.symbol"
+                                                         style="color:black"/>
+                                                   <t t-esc="website_product_id.list_price"/>
+                                               </h6>
+                                           </div>
+                                           <div class="o_wsale_product_btn" data-oe-model="ir.ui.view"
+                                                data-oe-id="1561" data-oe-field="arch"
+                                                data-oe-xpath="/t[1]/form[1]/div[2]/div[2]"/>
+                                       </div>
+                                       <span class="o_ribbon " style=""/>
+                                   </form>
+                               </div>
+                           </t>
+                       </div>
+                   </section>
+               </div>
+           </xpath>
+       </data>
+   </template>
+</odoo>

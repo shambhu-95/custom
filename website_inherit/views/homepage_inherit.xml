@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <template id="custom_homepage" inherit_id="website.homepage">
+    <xpath expr="//div[@id='wrap']" position="inside">
+      <!-- Fetch employee records for guest users -->
+      <t t-set="contacts" t-value="request.env['hr.employee'].search([], limit=10)"/>
+
+      <section class="container my-5">
+        <div class="text-center">
+          <h2>Our Team</h2>
+          <p>Meet some of our employees</p>
+          <div class="row">
+            <t t-foreach="contacts" t-as="contact">
+              <div class="col-md-4 mb-3">
+                <div class="card p-3 text-center">
+                  <img t-if="contact.image_1920"
+                       t-att-src="'/web/image/hr.employee/%s/image_1920' % contact.id"
+                       class="img-fluid rounded-circle mb-3"
+                       style="width: 120px; height: 120px; object-fit: cover;"/>
+                  <h5><t t-esc="contact.name"/></h5>
+                </div>
+              </div>
+            </t>
+          </div>
+        </div>
+      </section>
+    </xpath>
+  </template>
+</odoo>
