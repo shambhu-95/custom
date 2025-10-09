@@ -1,0 +1,43 @@
+<odoo>
+  <record id="view_jitsi_meeting_form" model="ir.ui.view">
+    <field name="name">jitsi.meeting.form</field>
+    <field name="model">odoo.jitsi.meeting</field>
+    <field name="arch" type="xml">
+      <form string="Jitsi Meeting">
+        <sheet>
+          <group>
+            <field name="name"/>
+            <field name="room_name" readonly="1"/>
+            <field name="url" readonly="1"/>
+          </group>
+          <group>
+            <div id="jitsi-container" style="height:600px; width:100%;"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="view_jitsi_meeting_tree" model="ir.ui.view">
+    <field name="name">jitsi.meeting.tree</field>
+    <field name="model">odoo.jitsi.meeting</field>
+    <field name="arch" type="xml">
+      <tree string="Jitsi Meetings">
+        <field name="name"/>
+        <field name="room_name"/>
+        <field name="url"/>
+      </tree>
+    </field>
+  </record>
+
+
+
+  <record id="action_jitsi_meeting" model="ir.actions.act_window">
+    <field name="name">Jitsi Meetings</field>
+    <field name="res_model">odoo.jitsi.meeting</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+    <menuitem id="menu_jitsi_root" name="Jitsi" sequence="10"/>
+  <menuitem id="menu_jitsi_meeting" name="Meetings" parent="menu_jitsi_root"
+            action="action_jitsi_meeting"/>
+</odoo>
