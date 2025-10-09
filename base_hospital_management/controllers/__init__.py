@@ -22,3 +22,4 @@
 from . import patient_booking
 from . import portal
 from . import view_portal
+from . import pincode_controller

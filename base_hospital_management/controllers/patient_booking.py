@@ -21,6 +21,7 @@
 ################################################################################
 from odoo import fields, http
 from odoo.http import request
+import base64
 
 
 class PatientBooking(http.Controller):
@@ -47,11 +48,25 @@ class PatientBooking(http.Controller):
             request.env.user.partner_id.sudo().write(
                 {'patient_seq': request.env['ir.sequence'].sudo().next_by_code(
                     'patient.sequence')}) or 'New'
+        payment_file = kw.get('payment_screenshot')
+        payment_screenshot = False
+        filename = False
+        if payment_file:
+            payment_screenshot = base64.b64encode(payment_file.read())
+            filename = payment_file.filename
+
         op = request.env['hospital.outpatient'].sudo().create({
             'patient_id': request.env.user.partner_id.id,
             'doctor_id': int(kw.get("doctor-name")),
             'op_date': kw.get("date"),
-            'reason': kw.get("reason")
+            'reason': kw.get("reason"),
+            'date_of_birth': kw.get("date_of_birth"),
+            'age': kw.get("age"),
+            'gender': kw.get("gender"),
+            'mobile': kw.get("mobile"),
+            'email': kw.get("email"),
+            'payment_screenshot': payment_screenshot,
+            'payment_screenshot_filename': filename,
         })
         op.sudo().action_confirm()
         return request.redirect('/my/home')

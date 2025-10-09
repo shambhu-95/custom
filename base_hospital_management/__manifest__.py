@@ -85,9 +85,15 @@
     "demo": ["demo/hr_job_demo.xml"],
     "assets": {
         "web.assets_frontend": [
+
             "base_hospital_management/static/src/js/prescription.js",
             "base_hospital_management/static/src/js/website_page.js",
+
         ],
+
+
+
+
         "web.assets_backend": [
             "base_hospital_management/static/src/xml/lab_dashboard_templates.xml",
             "base_hospital_management/static/src/xml/doctor_dashboard_templates.xml",

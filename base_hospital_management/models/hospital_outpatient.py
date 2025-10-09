@@ -20,8 +20,11 @@
 #
 ################################################################################
 import base64
+from datetime import date
+
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
+import requests
 
 
 class HospitalOutpatient(models.Model):
@@ -31,6 +34,9 @@ class HospitalOutpatient(models.Model):
     _rec_name = 'op_reference'
     _inherit = 'mail.thread'
     _order = 'op_date desc'
+
+    payment_screenshot = fields.Binary("Payment Screenshot")
+    payment_screenshot_filename = fields.Char("Screenshot Filename")
 
     op_reference = fields.Char(string="OP Reference", readonly=True,
                                default='New',
@@ -50,6 +56,10 @@ class HospitalOutpatient(models.Model):
     op_date = fields.Date(default=fields.date.today(), string='Date',
                           help='Date of OP')
     reason = fields.Text(string='Reason', help='Reason for visiting hospital')
+
+    mobile = fields.Char(string="Mobile Number", help="Patient's mobile number")
+    email = fields.Char(string="Email", help="Patient's email address")
+
     test_count = fields.Integer(string='Test Created',
                                 help='Number of tests created for the patient',
                                 compute='_compute_test_count')
@@ -79,6 +89,42 @@ class HospitalOutpatient(models.Model):
                         copy=False, readonly=True)
     is_sale_created = fields.Boolean(string='Sale Created',
                                      help='True if sale order created')
+
+    date_of_birth = fields.Date("Date of Birth")
+    age = fields.Integer("Age", compute="_compute_age", store=True)
+
+    @api.depends('date_of_birth')
+    def _compute_age(self):
+        today = date.today()
+        for rec in self:
+            if rec.date_of_birth:
+                rec.age = today.year - rec.date_of_birth.year - (
+                        (today.month, today.day) < (rec.date_of_birth.month, rec.date_of_birth.day)
+                )
+            else:
+                rec.age = 0
+
+    gender = fields.Selection([
+        ('male', 'Male'),
+        ('female', 'Female'),
+        ('other', 'Other'),
+    ], string="Gender")
+
+    # pincode = fields.Char("Pincode")
+    # country_id = fields.Many2one("res.country", "Country")
+    # state_id = fields.Many2one("res.country.state", "State")
+    # district = fields.Char("District")
+    # area = fields.Char("Area")
+
+
+
+
+
+
+
+
+
+
 
     @api.model
     def create(self, vals):

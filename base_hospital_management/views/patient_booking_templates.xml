@@ -1,50 +1,93 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <!--        Patient booking template-->
+    <!-- Patient booking template -->
     <template id="patient_booking_form">
         <t t-call="website.layout">
             <div id="booking_form">
-                <section
-                        class="s_title parallax s_parallax_is_fixed bg-black-50 pt24 pb24"
+                <section class="s_title parallax s_parallax_is_fixed bg-black-50 pt-3 pt-md-4 pb-3 pb-md-4"
                         data-vcss="001" data-snippet="s_title"
                         data-scroll-background-ratio="1">
                     <span class="s_parallax_bg oe_img_bg"
                           style="background-image: url('/web/image/website.s_banner_default_image'); background-position: 50% 0;"/>
                     <div class="o_we_bg_filter bg-black-50"/>
                     <div class="container-fluid">
-                        <h1 class="container">Patient Booking</h1>
+                        <h1 class="container display-5 display-md-4">Patient Booking</h1>
                     </div>
                 </section>
-                <section class="p-3">
+                <section class="p-2 p-md-3">
                     <div class="container">
                         <form action="/patient_booking/success"
                               method="post" enctype="multipart/form-data">
+                            <!-- Patient Name -->
                             <div class="row">
-                                <div class="mb-3 col-8">
-                                    <label for="name"
-                                           class="form-label">Patient Name
-                                    </label>
-                                    <input type="text"
-                                           t-attf-value="{{user}}"
-                                           class="form-control"/>
+                                <div class="mb-3 col-12 col-md-8">
+                                    <label for="name" class="form-label">Patient Name</label>
+                                    <input type="text" t-attf-value="{{user}}" class="form-control" id="name"/>
                                 </div>
                             </div>
+
+                            <!-- Contact Information -->
                             <div class="row">
-                                <div class="mb-3 col-2">
-                                    <label for="qty"
-                                           class="form-label">Booking Date
-                                    </label>
-                                    <input class="form-control" type="date"
-                                           id="booking_date" name="date" t-attf-value="{{date}}"
-                                           required="True"/>
+                                <div class="mb-3 col-12 col-md-6 col-lg-4">
+                                    <label for="mobile" class="form-label">Mobile Number</label>
+                                    <input type="tel" name="mobile" id="mobile" class="form-control"
+                                           placeholder="Enter mobile number" pattern="[0-9]{10}" required="True"/>
                                 </div>
-                                <div class="mb-3 col-3">
-                                    <label for="qty"
-                                           class="form-label">Department
-                                    </label>
-                                    <select name="doctor-department"
-                                            id="doctor-department"
-                                            class="form-control link-style">
+                                <div class="mb-3 col-12 col-md-6 col-lg-4">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" name="email" id="email" class="form-control"
+                                           placeholder="Enter email address"/>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                    <!-- Pincode -->
+<!--                    <div class="mb-3 col-12 col-md-6 col-lg-3">-->
+<!--                        <label for="pincode" class="form-label">Pincode</label>-->
+<!--                        <input type="text" name="pincode" id="pincode" maxlength="6"-->
+<!--                               class="form-control" placeholder="Enter Pincode" required="required"/>-->
+<!--                        &lt;!&ndash; Loading indicator will be added by JavaScript &ndash;&gt;-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; District &ndash;&gt;-->
+<!--                    <div class="mb-3 col-12 col-md-6 col-lg-3">-->
+<!--                        <label for="district" class="form-label">District</label>-->
+<!--                        <input type="text" name="district" id="district" class="form-control" readonly="readonly"/>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; Area &ndash;&gt;-->
+<!--                    <div class="mb-3 col-12 col-md-6 col-lg-3">-->
+<!--                        <label for="area" class="form-label">Area</label>-->
+<!--                        <input type="text" name="area" id="area" class="form-control" readonly="readonly"/>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; State &ndash;&gt;-->
+<!--                    <div class="mb-3 col-12 col-md-6 col-lg-3">-->
+<!--                        <label for="state_id" class="form-label">State</label>-->
+<!--                        <input type="hidden" name="state_id" id="state_id_hidden"/>-->
+<!--                        <input type="text" id="state_id" class="form-control" readonly="readonly"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="row">-->
+<!--                    &lt;!&ndash; Country &ndash;&gt;-->
+<!--                    <div class="mb-3 col-12 col-md-6 col-lg-3">-->
+<!--                        <label for="country_id" class="form-label">Country</label>-->
+<!--                        <input type="hidden" name="country_id" id="country_id_hidden"/>-->
+<!--                        <input type="text" id="country_id" class="form-control" readonly="readonly"/>-->
+<!--                    </div>-->
+                </div>
+
+                            <!-- Booking Details -->
+                            <div class="row">
+                                <div class="mb-3 col-12 col-md-6 col-lg-3">
+                                    <label for="booking_date" class="form-label">Booking Date</label>
+                                    <input class="form-control" type="date" id="booking_date" name="date"
+                                           t-attf-value="{{date}}" required="True"/>
+                                </div>
+                                <div class="mb-3 col-12 col-md-6 col-lg-3">
+                                    <label for="doctor-department" class="form-label">Department</label>
+                                    <select name="doctor-department" id="doctor-department" class="form-control link-style">
                                         <option/>
                                         <t t-foreach="departments" t-as="dep">
                                             <option t-att-value="dep[0]">
@@ -53,38 +96,75 @@
                                         </t>
                                     </select>
                                 </div>
-                                <div class="mb-3 col-3">
-                                    <label for="qty"
-                                           class="form-label">Doctor
-                                    </label>
-                                    <select name="doctor-name"
-                                            id="doctor-name"
-                                            required="True"
-                                            class="form-control link-style">
+                                <div class="mb-3 col-12 col-md-6 col-lg-3">
+                                    <label for="doctor-name" class="form-label">Doctor</label>
+                                    <select name="doctor-name" id="doctor-name" required="True" class="form-control link-style">
                                     </select>
                                 </div>
                             </div>
+
+                            <!-- Personal Details -->
                             <div class="row">
-                                <div class="mb-3 col-8">
-                                    <label for="description"
-                                           class="form-label">Reason For
-                                        Visit
-                                    </label>
-                                    <textarea
-                                            class="form-control s_website_form_input"
-                                            name="reason" id="reason"
-                                            rows="4"/>
+                                <div class="mb-3 col-12 col-md-6 col-lg-3">
+                                    <label for="date_of_birth" class="form-label">Date of Birth</label>
+                                    <input name="date_of_birth" type="date" id="date_of_birth" required="True" class="form-control link-style"/>
+                                </div>
+                                <div class="mb-3 col-12 col-md-6 col-lg-3">
+                                    <label for="age" class="form-label">Age</label>
+                                    <input name="age" type="number" id="age" required="True" class="form-control link-style"/>
+                                </div>
+                                <div class="mb-3 col-12 col-md-6 col-lg-3">
+                                    <label for="gender" class="form-label">Gender</label>
+                                    <select name="gender" id="gender" required="True" class="form-control link-style">
+                                        <option value="">-- Select Gender --</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
                                 </div>
                             </div>
+
+                            <!-- Reason for Visit -->
                             <div class="row">
-                                <div class="mb-3 col-8">
-                                    <button type="submit"
-                                            class="btn btn-primary">
+                                <div class="mb-3 col-12 col-md-8">
+                                    <label for="reason" class="form-label">Reason For Visit</label>
+                                    <textarea class="form-control s_website_form_input" name="reason" id="reason" rows="4"></textarea>
+                                </div>
+                            </div>
+
+
+                            <!-- Payment Section -->
+                            <div class="row">
+                                <div class="mb-3 col-12 col-md-8 text-center">
+                                    <label class="form-label fw-bold">Scan &amp; Pay</label>
+                                    <div class="border p-3 rounded shadow-sm">
+                                        <img src="base_hospital_management/static/img/scan.png"
+                                             alt="SBI QR Code - Scan &amp; Pay"
+                                             class="img-fluid"
+                                             style="max-width:250px;"/>
+                                        <p class="mt-2 mb-0">UPI ID: <strong>38519080760@sbi</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Upload Payment Screenshot -->
+                            <div class="row">
+                                <div class="mb-3 col-12 col-md-8">
+                                    <label for="payment_screenshot" class="form-label">Upload Payment Screenshot</label>
+                                    <input type="file" id="payment_screenshot" name="payment_screenshot"
+                                           class="form-control" accept="image/*" required="True"/>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="row">
+                                <div class="mb-3 col-12 col-md-8">
+                                    <button type="submit" class="btn btn-primary btn-lg">
                                         Submit
                                     </button>
                                     <t t-if="card">
                                         <a t-attf-href="/web/content/{{attachment_id}}?download=true&amp;access_token="
-                                           style="text-decoration:underline; margin-left:10px;">
+                                           class="d-inline-block mt-2 mt-md-0 ms-md-3" style="text-decoration:underline;">
                                             Download Patient Card
                                         </a>
                                     </t>
@@ -93,7 +173,30 @@
                         </form>
                     </div>
                 </section>
+
+                <!-- Add custom CSS for better mobile responsiveness -->
+                <style>
+                    @media (max-width: 768px) {
+                        .form-label {
+                            font-weight: 500;
+                        }
+                        .form-control, .btn {
+                            border-radius: 0.5rem;
+                        }
+                        #booking_form section.p-2 {
+                            padding: 1rem !important;
+                        }
+                    }
+                    @media (max-width: 576px) {
+                        .container {
+                            padding-left: 15px;
+                            padding-right: 15px;
+                        }
+                    }
+                </style>
             </div>
         </t>
+
+
     </template>
 </odoo>
