@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ✅ Correct inheritance -->
+    <template id="custom_header_inherit" inherit_id="website.layout" name="Custom Header Extension">
+
+        <!-- Add custom code inside header -->
+        <xpath expr="//header" position="inside">
+            <div id="custom-header-banner" class="bg-primary text-white text-center py-2">
+                <p>✨ Welcome to Our Ashram – Serving with Love and Care ✨</p>
+            </div>
+        </xpath>
+
+        <!-- Add link before navbar collapse -->
+        <xpath expr="//div[contains(@class, 'navbar-collapse')]" position="before">
+            <div class="custom-top-link text-end pe-3">
+                <a href="/donate" class="text-warning fw-bold">Donate Now</a>
+            </div>
+        </xpath>
+
+    </template>
+</odoo>

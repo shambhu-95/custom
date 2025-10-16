@@ -1,0 +1,38 @@
+<!-- views/templates.xml -->
+<odoo>
+    <data>
+        <!-- Try this first - generic header inheritance -->
+        <template id="custom_header_inherit" inherit_id="website.layout" name="Custom Header">
+            <xpath expr="//header" position="replace">
+                <header id="top" class="o_header_standard custom-header">
+                    <div class="container">
+                        <div class="row align-items-center py-3">
+                            <!-- Logo -->
+                            <div class="col-lg-3 col-md-4 col-6">
+                                <a href="/" class="navbar-brand">
+                                    <span>🏥 Hospital Management</span>
+                                </a>
+                            </div>
+
+                            <!-- Navigation -->
+                            <div class="col-lg-6 col-md-8 d-none d-md-block">
+                                <ul class="navbar-nav flex-row justify-content-center">
+                                    <li class="nav-item"><a class="nav-link mx-3" href="/">Home</a></li>
+                                    <li class="nav-item"><a class="nav-link mx-3" href="/about">About</a></li>
+                                    <li class="nav-item"><a class="nav-link mx-3" href="/services">Services</a></li>
+                                    <li class="nav-item"><a class="nav-link mx-3" href="/doctors">Doctors</a></li>
+                                    <li class="nav-item"><a class="nav-link mx-3" href="/contact">Contact</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- CTA Button -->
+                            <div class="col-lg-3 text-end">
+                                <a class="btn btn-primary" href="/appointment">Book Appointment</a>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+            </xpath>
+        </template>
+    </data>
+</odoo>

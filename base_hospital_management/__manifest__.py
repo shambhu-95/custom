@@ -81,6 +81,8 @@
         "report/res_partner_reports.xml",
         "report/lab_test_line_reports.xml",
         "views/lab_test_line_views.xml",
+        "views/hremployee.xml",
+        "views/website_header_inherit.xml",
     ],
     "demo": ["demo/hr_job_demo.xml"],
     "assets": {

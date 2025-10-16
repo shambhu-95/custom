@@ -1,0 +1,6 @@
+/* Reduce banner height */
+#bannerCarousel .carousel-item img {
+    height: 200px;   /* adjust height as needed */
+    object-fit: cover; /* crops the image nicely */
+    width: 100%;
+}

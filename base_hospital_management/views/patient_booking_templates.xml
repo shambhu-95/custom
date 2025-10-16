@@ -103,6 +103,19 @@
                                 </div>
                             </div>
 
+
+
+                            <!-- Updated Consultation Price Field -->
+        <div class="mb-3 col-12 col-md-6 col-lg-3">
+            <label for="price_consultant" class="form-label">Consultation Price</label>
+            <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input type="text" name="price_consultant" id="price_consultant"
+                       class="form-control" readonly="readonly" placeholder="0.00"/>
+            </div>
+            <small class="form-text text-muted">Price will update automatically when you select a doctor</small>
+        </div>
+
                             <!-- Personal Details -->
                             <div class="row">
                                 <div class="mb-3 col-12 col-md-6 col-lg-3">
@@ -133,28 +146,7 @@
                             </div>
 
 
-                            <!-- Payment Section -->
-                            <div class="row">
-                                <div class="mb-3 col-12 col-md-8 text-center">
-                                    <label class="form-label fw-bold">Scan &amp; Pay</label>
-                                    <div class="border p-3 rounded shadow-sm">
-                                        <img src="base_hospital_management/static/img/scan.png"
-                                             alt="SBI QR Code - Scan &amp; Pay"
-                                             class="img-fluid"
-                                             style="max-width:250px;"/>
-                                        <p class="mt-2 mb-0">UPI ID: <strong>38519080760@sbi</strong></p>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <!-- Upload Payment Screenshot -->
-                            <div class="row">
-                                <div class="mb-3 col-12 col-md-8">
-                                    <label for="payment_screenshot" class="form-label">Upload Payment Screenshot</label>
-                                    <input type="file" id="payment_screenshot" name="payment_screenshot"
-                                           class="form-control" accept="image/*" required="True"/>
-                                </div>
-                            </div>
 
                             <!-- Submit Button -->
                             <div class="row">
@@ -171,6 +163,12 @@
                                 </div>
                             </div>
                         </form>
+
+
+
+
+
+
                     </div>
                 </section>
 
@@ -199,4 +197,71 @@
 
 
     </template>
+
+
+
+    <template id="patient_booking_form_step2" name="Patient Booking Step 2">
+  <t t-call="website.layout">
+    <t t-name="base_hospital_management.patient_booking_form_step2">
+    <section class="container mt-5 mb-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-12">
+          <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-header text-center bg-primary text-white rounded-top-4 py-3">
+              <h3 class="mb-0">
+                <i class="fa fa-credit-card me-2"></i> Upload Payment Screenshot
+              </h3>
+            </div>
+            <div class="card-body p-4">
+              <p class="text-muted text-center mb-4">
+                Please upload your payment proof to complete your booking.
+              </p>
+
+              <form action="/patient_booking/final_submit" method="post" enctype="multipart/form-data">
+
+
+                  <!-- Payment Section -->
+                            <div class="row">
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">Scan &amp; Pay</label>
+                                    <div class="border p-3 rounded shadow-sm">
+                                        <img t-att-src="'/base_hospital_management/static/src/img/scan.png'"
+     alt="SBI QR Code - Scan &amp; Pay"
+     class="img-fluid"
+     style="max-width:250px;"/>
+
+                                        <p class="mt-2 mb-0">UPI ID: <strong>38519080760@sbi</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                <div class="mb-4">
+                  <label class="form-label fw-bold">Select Payment Screenshot</label>
+                  <input type="file" name="payment_screenshot" class="form-control form-control-lg"
+                         accept="image/*" required="True"/>
+                </div>
+
+                <div class="text-center">
+                  <button type="submit" class="btn btn-success btn-lg px-5 py-2 rounded-pill shadow-sm">
+                    <i class="fa fa-check-circle me-2"></i> Final Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div class="card-footer text-center text-muted small bg-light rounded-bottom-4">
+              Step 2 of 2 — Confirm your booking
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+     </t>
+  </t>
+</template>
+
+
+
+
+
 </odoo>

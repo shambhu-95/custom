@@ -56,6 +56,7 @@ class HrEmployee(models.Model):
                                           help="Doctors specialization for"
                                                " an area")
 
+
     def action_create_user(self):
         """Updating employee field of res user to true"""
         self.ensure_one()

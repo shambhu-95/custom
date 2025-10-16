@@ -1,0 +1,49 @@
+<odoo>
+    <template id="inherit_homepage" inherit_id="website.homepage">
+        <xpath expr="//div[@id='wrap']" position="inside">
+
+            <!-- Bootstrap Carousel for Banners -->
+            <section class="container mt-5">
+                <div id="hospitalCarousel" class="carousel slide" data-bs-ride="carousel">
+
+                    <!-- Indicators -->
+                    <div class="carousel-indicators">
+                        <t t-foreach="banners" t-as="banner" t-foreach-index="idx">
+                            <button type="button"
+                                    data-bs-target="#hospitalCarousel"
+                                    t-att-data-bs-slide-to="idx"
+                                    t-att-class="'active' if idx == 0 else ''"
+                                    aria-current="true"
+                                    t-att-aria-label="banner.name"/>
+                        </t>
+                    </div>
+
+                    <!-- Slides -->
+                    <div class="carousel-inner">
+                        <t t-foreach="banners" t-as="banner" t-foreach-index="idx">
+                            <div t-att-class="'carousel-item active' if idx == 0 else 'carousel-item'">
+                                <img t-att-src="'data:image/png;base64,%s' % (banner.image.decode() if banner.image else '')"
+                                     class="d-block w-100"
+                                     t-att-alt="banner.name"/>
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5><t t-esc="banner.name"/></h5>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+
+                    <!-- Controls -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#hospitalCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#hospitalCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </section>
+
+        </xpath>
+    </template>
+</odoo>

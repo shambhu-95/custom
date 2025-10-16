@@ -1,0 +1,27 @@
+<!-- views/website_home_inherit.xml -->
+<odoo>
+    <template id="inherit_homepage_with_banner" inherit_id="website.homepage">
+        <xpath expr="//div[@id='wrap']" position="before">
+            <section id="banner-carousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <t t-foreach="request.env['website.banner'].sudo().search([('active','=',True)], order='sequence asc')" t-as="banner">
+                        <div t-attf-class="carousel-item #{'active' if loop.index == 1 else ''}">
+                            <a t-if="banner.url" t-att-href="banner.url">
+                                <img t-att-src="'data:image/png;base64,%s' % banner.image.decode()" class="d-block w-100" t-att-alt="banner.name"/>
+                            </a>
+                            <t t-else="">
+                                <img t-att-src="'data:image/png;base64,%s' % banner.image.decode()" class="d-block w-100" t-att-alt="banner.name"/>
+                            </t>
+                        </div>
+                    </t>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#banner-carousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#banner-carousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </section>
+        </xpath>
+    </template>
+</odoo>

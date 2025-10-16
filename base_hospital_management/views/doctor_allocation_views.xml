@@ -40,7 +40,7 @@
                     <group attrs="{'readonly': [('state', '!=', 'draft')]}">
                         <group>
                             <field name="doctor_id"  options="{'no_create': True, 'no_edit': True}"
-                                   attrs="{'readonly': [('is_doctor', '=', True)]}"/>
+                                   />
                             <field name="patient_type"/>
                             <field name="department_id"/>
                             <field name="date"/>
@@ -55,6 +55,7 @@
                                    string="Time/ Patient"
                                    widget="float_time"/>
                             <field name="patient_limit"/>
+                            <field name="price_consultant"/>
                         </group>
                     </group>
                 </sheet>

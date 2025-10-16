@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+     <template id="custom_header" inherit_id="website.layout">
+    <xpath expr="//header" position="replace">
+
+           <header style="z-index: 9999">
+
+               <!-- 🔷 Top Contact Bar -->
+               <div class="top-contact-bar text-white py-1" style="background-color:#2d2d86;">
+                   <div class="container d-flex justify-content-between align-items-center flex-wrap text-center text-md-start">
+                       <div class="contact-info w-100 w-md-auto mb-1 mb-md-0">
+                           <span class="me-3 d-block d-md-inline">
+                               <i class="fa fa-phone me-1"></i> 033 4011 1222
+                           </span>
+                           <span class="me-3 d-block d-md-inline">
+                               <i class="fa fa-envelope me-1"></i> ph.enquiry@peerlesshospital.com
+                           </span>
+                           <span class="me-3 d-block d-md-inline">
+                               <i class="fa fa-ambulance me-1"></i> Emergency: +91 89810 80008
+                           </span>
+                           <span class="d-block d-md-inline">
+                               <i class="fa fa-hospital-o me-1"></i> Ambulance: +91 90382 24000 / +91 90382 25000
+                           </span>
+                       </div>
+                   </div>
+               </div>
+
+               <!-- 🔶 Main Navigation Bar -->
+               <nav class="navbar navbar-expand-lg py-3" style="background-color: #c2c2c2;">
+                   <div class="container ps-2 pe-2">
+                       <!-- Logo -->
+                       <a class="navbar-brand" href="/">
+                           <img src="/customize_title_header/static/src/img/out_p.png"
+                                alt="Logo"
+                                style="height: 28px; max-height: 28px;"/>
+                       </a>
+
+                       <!-- Mobile Toggle -->
+                       <button class="navbar-toggler" type="button"
+                               data-bs-toggle="collapse"
+                               data-bs-target="#navbarSupportedContent"
+                               aria-controls="navbarSupportedContent"
+                               aria-expanded="false"
+                               aria-label="Toggle navigation">
+                           <span class="fa fa-bars text-dark fs-4"></span>
+                       </button>
+
+                       <!-- Nav Links -->
+                       <div class="collapse navbar-collapse mt-2 mt-lg-0" id="navbarSupportedContent">
+                           <ul class="navbar-nav mx-auto text-center">
+                               <li class="nav-item"><a class="nav-link text-dark fw-semibold" href="#">Home</a></li>
+                               <li class="nav-item"><a class="nav-link text-dark fw-semibold" href="#">About Us</a></li>
+                               <li class="nav-item"><a class="nav-link text-dark fw-semibold" href="#">Departments</a></li>
+                               <li class="nav-item"><a class="nav-link text-dark fw-semibold" href="#">Contact</a></li>
+                           </ul>
+
+                           <!-- Right Section: Login / Dropdown -->
+                           <div class="nav navbar-nav text-center text-lg-end mt-2 mt-lg-0">
+                               <!-- Sign In -->
+                               <t t-call="portal.placeholder_user_sign_in">
+                                   <t t-set="_item_class" t-value="'nav-item d-inline-block'"/>
+                                   <t t-set="_link_class" t-value="'nav-link text-dark fw-semibold'"/>
+                               </t>
+
+                               <!-- User Dropdown -->
+                               <t t-call="portal.user_dropdown">
+                                   <t t-set="_user_name" t-value="True"/>
+                                   <t t-set="_item_class" t-value="'nav-item dropdown d-inline-block'"/>
+                                   <t t-set="_link_class" t-value="'nav-link text-dark fw-semibold'"/>
+                               </t>
+                           </div>
+                       </div>
+                   </div>
+               </nav>
+
+               <!-- 🔸 Responsive Styling -->
+               <style>
+                   @media (max-width: 767px) {
+                       .top-contact-bar {
+                           font-size: 13px !important;
+                           text-align: center !important;
+                       }
+                       .contact-info span {
+                           display: block !important;
+                           margin-bottom: 3px;
+                       }
+                       .navbar-brand img {
+                           height: 24px !important;
+                       }
+                   }
+                   .nav-link:hover {
+                       color: #000 !important;
+                       text-decoration: underline;
+                   }
+               </style>
+
+           </header>
+       </xpath>
+   </template>
+</odoo>

@@ -27,7 +27,7 @@
         'web'
     ],
     'data': [
-        
+            'views/header.xml',
     ],
     'assets': {
         'web.assets_backend_prod_only': [

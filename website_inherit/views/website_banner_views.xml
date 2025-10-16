@@ -1,0 +1,43 @@
+<!-- views/website_banner_views.xml -->
+<odoo>
+    <record id="view_website_banner_tree" model="ir.ui.view">
+        <field name="name">website.banner.tree</field>
+        <field name="model">website.banner</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_website_banner_form" model="ir.ui.view">
+        <field name="name">website.banner.form</field>
+        <field name="model">website.banner</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="image" widget="image"/>
+                        <field name="url"/>
+                        <field name="sequence"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_website_banner" model="ir.actions.act_window">
+        <field name="name">Banners</field>
+        <field name="res_model">website.banner</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_website_banner_root" name="Website"/>
+    <menuitem id="menu_website_banner" name="Banners"
+              parent="menu_website_banner_root"
+              action="action_website_banner"/>
+</odoo>

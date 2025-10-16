@@ -79,6 +79,7 @@ class DoctorAllocation(models.Model):
         [('draft', 'Draft'), ('confirm', 'Confirmed'),
          ('cancel', 'Cancelled')],
         default='draft', string='State', help='State of Doctor allocation')
+    price_consultant = fields.Float(string='Consultation Price')
 
     @api.model
     def create(self, vals):

@@ -3,17 +3,16 @@ odoo.define('base_hospital_management.website_page', function (require) {
     var publicWidget = require('web.public.widget');
     var ajax = require('web.ajax');
     publicWidget.registry.doctorWidget = publicWidget.Widget.extend({
-    //Extends the publicWidget.Widget class to hide and show the button and calculate the distance between locations.
         selector: '#booking_form',
         events: {
             'change #booking_date': 'changeBookingDate',
             'change #doctor-department': 'updateDoctorOptions',
+            'change #doctor-name': 'updateConsultationPrice',
         },
-         start: function () {
-         this.changeBookingDate();
-         },
+        start: function () {
+            this.changeBookingDate();
+        },
         changeBookingDate: function () {
-        //Update the doctor selection field
             var self = this;
             var selectedDate = this.$('#booking_date').val();
             ajax.jsonRpc('/patient_booking/get_doctors', 'call', {
@@ -25,6 +24,7 @@ odoo.define('base_hospital_management.website_page', function (require) {
                     self.$('#doctor-name').append($('<option>', {
                         value: doctor.id,
                         text: doctor.name,
+                        'data-price': doctor.price_consultant // Updated field name
                     }));
                 });
                 self.$('#doctor-department').empty();
@@ -36,10 +36,11 @@ odoo.define('base_hospital_management.website_page', function (require) {
                         text: dep.name,
                     }));
                 });
+                // Update consultation price when doctors are loaded
+                self.updateConsultationPrice();
             });
         },
         updateDoctorOptions: function () {
-        //Update the doctor selection field
             var self = this;
             var selectedDate = this.$('#booking_date').val();
             var department = this.$('#doctor-department').val();
@@ -52,9 +53,25 @@ odoo.define('base_hospital_management.website_page', function (require) {
                     self.$('#doctor-name').append($('<option>', {
                         value: doctor.id,
                         text: doctor.name,
+                        'data-price': doctor.price_consultant // Updated field name
                     }));
                 });
+                // Update consultation price when doctors are loaded
+                self.updateConsultationPrice();
             });
+        },
+        updateConsultationPrice: function () {
+            // Update consultation price based on selected doctor
+            var selectedDoctor = this.$('#doctor-name option:selected');
+            var consultationPrice = selectedDoctor.data('price') || 0;
+
+            // Format the price for display
+            var formattedPrice = new Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(consultationPrice);
+
+            this.$('#price_consultant').val(formattedPrice);
         },
     });
     return publicWidget.registry.doctorWidget;
