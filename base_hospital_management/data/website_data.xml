@@ -8,5 +8,12 @@
             <field name="parent_id" ref="website.main_menu"/>
             <field name="sequence" type="int">50</field>
         </record>
+
+        <record id="website_menu_Doctors" model="website.menu">
+            <field name="name">Doctors</field>
+            <field name="url">/all_booking</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">51</field>
+        </record>
     </data>
 </odoo>

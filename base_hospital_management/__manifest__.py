@@ -83,6 +83,8 @@
         "views/lab_test_line_views.xml",
         "views/hremployee.xml",
         "views/website_header_inherit.xml",
+        "views/all_doctor_view.xml",
+
     ],
     "demo": ["demo/hr_job_demo.xml"],
     "assets": {

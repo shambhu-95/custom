@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="all_doctor_view">
+        <t t-call="website.layout">
+
+            <div class="container mt-5 mb-5">
+                <h1 class="text-center mb-4">All Doctors</h1>
+
+                <!-- Filter Section -->
+                <div class="text-center mb-4">
+                    <select id="department_filter" class="form-control w-25 d-inline-block">
+                        <option value="all">All Departments</option>
+
+                        <t t-foreach="departments" t-as="dept">
+                            <option t-att-value="dept.id" t-esc="dept.name"/>
+                        </t>
+                    </select>
+                </div>
+
+                <!-- Doctors List -->
+                <div class="row" id="doctor_list">
+
+                    <t t-foreach="doctors" t-as="doc">
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4 doctor-card"
+                             t-att-data-dept="doc.department_id.id">
+                            <div class="card shadow-sm p-3 text-center">
+
+                                <!-- Doctor Image -->
+                                <img t-att-src="'/web/image/hr.employee/%s/image_1920' % doc.id"
+                                     class="img-fluid rounded-circle mb-3"
+                                     style="width:120px; height:120px; object-fit:cover;" />
+
+                                <!-- Doctor Name -->
+                                <h4 t-esc="doc.name"/>
+
+                                <!-- Department -->
+                                <p t-if="doc.department_id">
+                                    <strong>Department:</strong>
+                                    <span t-esc="doc.department_id.name"/>
+                                </p>
+
+                            </div>
+                        </div>
+                    </t>
+
+                </div>
+            </div>
+
+            <!-- Filter Script -->
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+
+                    var filter = document.getElementById("department_filter");
+
+                    filter.addEventListener("change", function () {
+                        var selected = this.value;
+                        var cards = document.querySelectorAll(".doctor-card");
+
+                        cards.forEach(function(card) {
+                            if (selected === "all") {
+                                card.style.display = "block";
+                            } else if (card.dataset.dept === selected) {
+                                card.style.display = "block";
+                            } else {
+                                card.style.display = "none";
+                            }
+                        });
+                    });
+
+                });
+            </script>
+
+        </t>
+    </template>
+
+</odoo>

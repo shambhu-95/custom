@@ -45,6 +45,17 @@ class PatientBooking(http.Controller):
         }
         return request.render("base_hospital_management.patient_booking_form", values)
 
+    @http.route('/all_booking', type='http', auth="public", website=True)
+    def all_booking(self):
+
+        doctors = request.env['hr.employee'].sudo().search([])
+        departments = request.env['hr.department'].sudo().search([])
+
+        return request.render("base_hospital_management.all_doctor_view", {
+            'doctors': doctors,
+            'departments': departments,
+        })
+
     @http.route('/patient_booking/success', type='http', auth="public", website=True, csrf=False)
     def patient_booking_step2(self, **kw):
         """Second form for payment screenshot"""
@@ -162,23 +173,44 @@ class PatientBooking(http.Controller):
     @http.route('/patient_booking/get_doctors', type='json', auth="public", website=True)
     def update_doctors(self, **kw):
         """Method for fetching doctor allocation for the selected date"""
-        domain = [('date', '=', kw.get('selected_date'))]
-        departments = []
-        doctors = []
-        if kw.get('department'):
-            domain.append(
-                ('doctor_id.department_id.id', '=', kw.get('department')))
+
+        selected_date = kw.get('selected_date')
+        department = kw.get('department')
+
+        # Convert selected date to string (just for safety)
+        if not selected_date:
+            return {'doctors': [], 'departments': []}
+
+        # NEW LOGIC: allow doctor if allocation_date >= selected_date
+        domain = [('date', '>=', selected_date)]
+
+        # Filter by department if selected
+        if department:
+            domain.append(('doctor_id.department_id', '=', int(department)))
+
         allocation = request.env['doctor.allocation'].sudo().search(domain)
+
+        doctors = []
+        departments = []
+
         for rec in allocation:
-            if request.env.user.partner_id not in rec.mapped(
-                    'op_ids.patient_id'):
+
+            # Exclude if this customer already booked (keep your old logic)
+            if request.env.user.partner_id not in rec.mapped('op_ids.patient_id'):
+
+                # Append doctor
                 doctors.append({
-                    'id': rec.id,
-                    'name': rec.name,
-                    'price_consultant': rec.price_consultant or 0.0  # Updated field name
+                    'id': rec.id,  # allocation ID
+                    'name': rec.name,  # doctor name
+                    'price_consultant': rec.price_consultant or 0.0
                 })
-                if ({'id': rec.department_id.id, 'name': rec.department_id.name}
-                        not in departments):
-                    departments.append({'id': rec.department_id.id,
-                                        'name': rec.department_id.name})
-        return {'doctors': doctors, 'departments': departments}
+
+                # Add department uniquely
+                dep_info = {'id': rec.department_id.id, 'name': rec.department_id.name}
+                if dep_info not in departments:
+                    departments.append(dep_info)
+
+        return {
+            'doctors': doctors,
+            'departments': departments
+        }
